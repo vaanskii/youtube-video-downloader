@@ -1,3 +1,9 @@
+import ssl
+import certifi
+
+ssl._create_default_https_context = ssl._create_unverified_context
+ssl._create_default_https_context = lambda: ssl.create_default_context(cafile=certifi.where())
+
 import tkinter
 import customtkinter
 from pytube import YouTube
@@ -9,7 +15,7 @@ def startDownload():
         video = ytObject.streams.get_highest_resolution()
         video.download()
     except:
-        print("Youtube link is invalid!")
+        print("Invalid link!")
     print('Download complete!')
 
 # System settings
@@ -32,6 +38,7 @@ link.pack()
 
 # Download button
 download = customtkinter.CTkButton(app, text='Download', command=startDownload)
+download.pack(padx=10, pady=10)
 
 
 # Run app
